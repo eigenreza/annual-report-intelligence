@@ -22,6 +22,10 @@ class DocumentInfo:
     entity: str
     currency: str | None
     note: str = ""
+    # What this entity calls a metric when its wording differs from the usual one,
+    # as (metric word, phrase) pairs. A financing subsidiary's revenue line is its
+    # interest income, and retrieval needs that phrase to recognise the row.
+    aliases: tuple[tuple[str, str], ...] = ()
 
     @property
     def name(self) -> str:
@@ -40,11 +44,16 @@ BMW_FINANCE_NOTE = (
     "BMW Group. It reports the subsidiary's own interest income and net result. "
     "BMW Group revenue and profit are not part of this document."
 )
+BMW_FINANCE_ALIASES = (("revenue", "interest income"), ("profit", "net income"), ("profit", "net result"))
 
 REGISTRY: tuple[DocumentInfo, ...] = (
     DocumentInfo("BMW/BMW_Annual_Report_2021.pdf", "BMW", 2021, "BMW Group", "EUR"),
-    DocumentInfo("BMW/BMW_Annual_Report_2022.pdf", "BMW", 2022, "BMW Finance N.V.", "EUR", BMW_FINANCE_NOTE),
-    DocumentInfo("BMW/BMW_Annual_Report_2023.pdf", "BMW", 2023, "BMW Finance N.V.", "EUR", BMW_FINANCE_NOTE),
+    DocumentInfo(
+        "BMW/BMW_Annual_Report_2022.pdf", "BMW", 2022, "BMW Finance N.V.", "EUR", BMW_FINANCE_NOTE, BMW_FINANCE_ALIASES
+    ),
+    DocumentInfo(
+        "BMW/BMW_Annual_Report_2023.pdf", "BMW", 2023, "BMW Finance N.V.", "EUR", BMW_FINANCE_NOTE, BMW_FINANCE_ALIASES
+    ),
     DocumentInfo("Ford/Ford_Annual_Report_2021.pdf", "Ford", 2021, "Ford Motor Company", "USD"),
     DocumentInfo("Ford/Ford_Annual_Report_2022.pdf", "Ford", 2022, "Ford Motor Company", "USD"),
     DocumentInfo("Ford/Ford_Annual_Report_2023.pdf", "Ford", 2023, "Ford Motor Company", "USD"),
