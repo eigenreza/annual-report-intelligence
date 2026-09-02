@@ -113,6 +113,8 @@ Group revenues 2: 2017 = 98,282; 2018 = 96,855; 2019 = 104,210; 2020 = 98,990; 2
 
 Tables become their own chunks, split by row groups with the header repeated when they are long. This is what lets a question about BMW's 2017 revenue be answered from the five-year overview in the 2021 report, and a question about Ford's 2020 revenue from the comparative column of the 2021 key metrics table.
 
+Each table row is also indexed on its own, as a small child chunk made of the table header, its title and the row. A key metrics table that mixes cash flow, revenue, earnings per share and return on capital embeds as a blur, and for a question about one of those lines the whole table ranked below smaller, more specific chunks. Retrieval matches against the rows and then hands the model the table they belong to, so the answer still comes with the surrounding rows and column labels.
+
 ### Duplicate text layers are detected and removed
 
 `Ford_Annual_Report_2023.pdf` renders the text of 74 of its 75 pages twice. On most pages the second rendering is a rigid copy shifted down by about 20 points, but on others it is re-typeset at a slightly different font size, so lines reflow and no geometric shift matches. The detector works on the character stream instead: when a page's opening characters reappear later in the stream and at least 80 percent of what follows repeats text before it, the second run is dropped before any text is read. Nothing is hard-coded to a file. The check runs on every page of every PDF, and no page of the other reports triggers it.
@@ -127,7 +129,9 @@ The conversation keeps the last four turns. Before retrieval, one model call rew
 
 ### Retrieval routes by company, never by year
 
-Company names in the question restrict retrieval to that company's chunks, and multi-company questions are retrieved per company and merged so that a larger report cannot crowd out a smaller one. Years are never used as a filter, because figures for a year often live in a later report's comparative columns or multi-year overview. A mentioned year only adds a small ranking bonus to chunks that contain it. Metric words are expanded with their synonyms before embedding, since US reports say net income where European reports say net profit.
+Company names in the question restrict retrieval to that company's chunks, and multi-company questions are retrieved per company and merged so that a larger report cannot crowd out a smaller one. A question about "which company" or "the companies" without a name is treated as a question about all of them. Years are never used as a filter, because figures for a year often live in a later report's comparative columns or multi-year overview. The one exception is a question about the present state of something ("currently", "latest") with no year named, which is answered from each company's most recent report so that an older status list cannot be merged into the answer.
+
+Ranking is dense similarity plus a small bonus for the share of the question's content words found in the chunk. Within one report many chunks embed almost identically for a short question, and the word that separates a key metrics table from a balance sheet is often just "revenue". Metric words are also expanded with their synonyms before embedding, since US reports say net income where European reports say net profit.
 
 ## Benchmark results
 
@@ -135,7 +139,7 @@ The benchmark in `eval/questions.py` holds twelve questions an analyst would ask
 
 ## Limitations
 
-- Retrieval is dense-only. A question phrased very differently from the report's wording can miss the right chunk.
+- Retrieval is embedding similarity with a light keyword bonus, not a full lexical index. A question phrased very differently from the report's wording can still miss the right chunk.
 - Table detection expects year headers. Tables headed by quarters or by text labels are still indexed as running text, which the model can read but which does not get the labelled serialisation.
 - The duplicate-layer detector assumes the second rendering follows the first in the character stream. A PDF that interleaves the two renderings line by line would need a different signature.
 - Two-column layouts are read line by line, so on a few pages of the BMW Finance N.V. reports a table of contents column is merged into the income statement rows. The figures remain readable but carry stray prefixes.
