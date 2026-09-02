@@ -51,7 +51,7 @@ QUESTIONS: tuple[Benchmark, ...] = (
             "million), net loss 394,288 thousand EUR (BMW_Annual_Report_2023.pdf, pages 10 and 19). The answer "
             "must say group revenue for 2023 is not in the documents. A figure near 155 billion EUR is leakage."
         ),
-        expect=(("1,965", "1.97", "1.965", "1,965.3"),),
+        expect=(("1,965", "1.97", "1.965", "394,288", "394.3"),),
         expect_regex=(ENTITY_CAVEAT, NOT_IN_CORPUS),
         forbid=("155,498", "155.5 billion", "155 billion", "155.4"),
     ),

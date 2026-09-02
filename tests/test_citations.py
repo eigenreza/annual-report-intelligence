@@ -36,6 +36,24 @@ def test_citation_forms_are_recognised():
     ]
 
 
+def test_citations_joined_by_and_and_sources_lines_are_recognised():
+    text = (
+        "Ford had a net loss (Ford_Annual_Report_2023.pdf, page 54 and Ford_Annual_Report_2022.pdf, page 39).\n"
+        "Sources: BMW_Annual_Report_2021.pdf, pages 9-11; BMW_Annual_Report_2023.pdf, page 10."
+    )
+    assert extract_citations(text) == [
+        ("Ford_Annual_Report_2023.pdf", {54}),
+        ("Ford_Annual_Report_2022.pdf", {39}),
+        ("BMW_Annual_Report_2021.pdf", {9, 10, 11}),
+        ("BMW_Annual_Report_2023.pdf", {10}),
+    ]
+
+
+def test_prose_citation_form_is_recognised():
+    text = "These figures come from the table on page 10 of BMW_Annual_Report_2021.pdf and page 4 in Tesla_Annual_Report_2023.pdf."
+    assert extract_citations(text) == [("BMW_Annual_Report_2021.pdf", {10}), ("Tesla_Annual_Report_2023.pdf", {4})]
+
+
 def test_cited_hits_match_file_and_location():
     hits = [
         Hit(chunk("Tesla_Annual_Report_2023.pdf", "page 20", 20), 0.9),

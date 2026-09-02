@@ -25,22 +25,26 @@ from src.ingest.registry import COMPANIES
 from src.llm import LLM
 
 DEFAULT_K = 8
-MULTI_COMPANY_MIN_QUOTA = 4
+MULTI_COMPANY_MIN_QUOTA = 5
 YEAR_BONUS = 0.03
 TABLE_BONUS = 0.02
 
 YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
+# A question about "the companies" or "which company" without naming one is about
+# all of them, and is retrieved per company like any other multi-company question.
+COMPANY_WORDS = re.compile(r"\b(?:compan(?:y|ies)|automakers?|manufacturers?|carmakers?)\b", re.IGNORECASE)
 METRIC_WORDS = re.compile(
     r"\b(revenue|revenues|sales|profit|profits|income|earnings|ebit|ebitda|ebt|margin|growth|loss)\b",
     re.IGNORECASE,
 )
 
 # Retrieval vocabulary differs between US and European reports (net income versus
-# net profit, revenue versus revenues), so metric words in the question are expanded
-# with their common synonyms before embedding.
+# net profit, revenue versus revenues) and between industrial and financing entities
+# (revenue versus interest income), so metric words in the question are expanded
+# with their common synonyms before embedding. "Sales" is deliberately not among the
+# revenue synonyms: in these reports it means vehicle units, not money.
 METRIC_EXPANSIONS = {
-    "revenue": "revenues total revenues net sales",
-    "sales": "revenues total revenues",
+    "revenue": "revenues total revenues interest income",
     "profit": "net income net profit profit before tax EBIT EBT earnings",
     "earnings": "net income net profit",
     "ebitda": "EBITDA EBIT depreciation and amortisation",
@@ -66,6 +70,8 @@ class Hit:
 def parse_query(question: str) -> QueryInfo:
     lowered = question.lower()
     companies = [c for c in COMPANIES if re.search(rf"\b{re.escape(c.lower())}\b", lowered)]
+    if not companies and COMPANY_WORDS.search(question):
+        companies = list(COMPANIES)
     years = sorted({int(y) for y in YEAR_RE.findall(question)})
     extras = [phrase for word, phrase in METRIC_EXPANSIONS.items() if re.search(rf"\b{word}s?\b", lowered)]
     expanded = question if not extras else f"{question}\n{' '.join(extras)}"

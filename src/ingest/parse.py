@@ -224,17 +224,25 @@ def _is_label_line(line: str) -> bool:
     )
 
 
+TITLE_LOOKBACK = 12
+
+
 def _title_lines(lines: list[str], before: int) -> list[str]:
-    """Up to two label lines above a table, skipping over an introductory sentence."""
+    """Up to two label lines above a table.
+
+    Introductory sentences and the rows of a preceding table are skipped, because
+    the heading that names a table (such as a segment name) often sits several
+    lines above its header. A segment table serialised without its heading reads
+    like a company total, which is worse than a slightly distant title.
+    """
     title: list[str] = []
-    for j in range(before - 1, max(-1, before - 4), -1):
+    for j in range(before - 1, max(-1, before - TITLE_LOOKBACK - 1), -1):
         line = lines[j]
-        if line.endswith(".") and len(line) <= 200:
-            continue
-        if not _is_label_line(line):
-            break
-        title.insert(0, line)
-        if len(title) == 2:
+        if _is_label_line(line):
+            title.insert(0, line)
+            if len(title) == 2:
+                break
+        elif title:
             break
     return title
 

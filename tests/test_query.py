@@ -20,6 +20,11 @@ def test_metric_words_are_expanded_for_retrieval_only():
     assert plain.expanded == plain.text
 
 
-def test_no_company_means_no_routing():
+def test_unnamed_company_question_routes_to_every_company():
     info = parse_query("Which company recorded better profitability in 2022 overall?")
+    assert info.companies == ["BMW", "Ford", "Tesla"]
+
+
+def test_question_without_any_company_reference_is_not_routed():
+    info = parse_query("By how much did the central bank raise interest rates?")
     assert info.companies == []
