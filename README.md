@@ -73,7 +73,7 @@ data/*.pdf, *.docx
   parse ............... page text, duplicate text layer removal, table detection
         |
         v
-  chunk ............... text windows and table chunks, metadata on every chunk
+  chunk ............... text windows, table chunks and table rows, metadata on every chunk
         |
         v
   index ............... text-embedding-3-small vectors in FAISS, chunks in JSON
@@ -81,7 +81,7 @@ data/*.pdf, *.docx
 question
    |  rewrite (uses the last turns to make a follow-up standalone)
    v
-retrieve .............. company routing, per-company merge, top-k
+retrieve .............. dense and BM25 ranks fused, company routing, per-company merge, top-k
    |
    v
 answer ................ grounded prompt with excerpt headers, citations checked
@@ -135,7 +135,42 @@ Ranking fuses two orderings by reciprocal rank: the dense similarity of the embe
 
 ## Benchmark results
 
-The benchmark in `eval/questions.py` holds twelve questions an analyst would ask, with reference notes verified against the documents, plus two follow-up sequences that exercise the rewriting step. `eval/run_eval.py` runs them through the full pipeline and writes `eval/results.md` with every answer, its citations and a verdict.
+The benchmark in `eval/questions.py` holds twelve questions an analyst would ask, with reference notes verified against the documents, plus two follow-up sequences that exercise the rewriting step. `eval/run_eval.py` runs them through the full pipeline and writes `eval/results.md` with every answer, its citations and a verdict. Verdicts are string checks against the reference figures (expected figures present, entity caveat present, real-world figures that are not in the corpus absent, citations present), and every answer was also read by hand.
+
+The table below is from the run of 2 September 2026 with `gpt-4.1-mini`, k = 12 and 1,621 chunks. Figures are in millions unless stated.
+
+| # | Question | Answer in short | Verdict |
+|---|---|---|---|
+| 1 | BMW's total revenue in 2023 | Not in the documents. The 2023 file is BMW Finance N.V., whose interest income was 1,965,292 thousand EUR. Latest group revenue is 2021. | correct and grounded |
+| 2 | Tesla's revenue in 2023 | 96,773 USD | correct and grounded |
+| 2a | "and the year before?" | Rewritten to Tesla's 2022 revenue: 81,462 USD | correct and grounded |
+| 3 | Ford's revenue in 2020 | 127,144 USD, from the comparative column of the 2021 key metrics table | correct and grounded |
+| 4 | BMW's revenue in 2017 | 98,282 EUR, from the five-year overview in the 2021 report | correct and grounded |
+| 5 | Economic factors behind Ford's 2021 performance | Semiconductor shortage, COVID-19 disruption, pricing and demand, currency and geopolitical risk, with page citations | correct and grounded |
+| 6 | Tesla product currently in development | Next Generation Platform and Tesla Roadster, from the 2023 production status table | correct and grounded |
+| 7 | BMW's profit in 2020 and 2023 | 2020: group net profit 3,857 EUR. 2023: only BMW Finance N.V. is in the corpus, net loss 394,288 thousand EUR, group figure not available | correct and grounded |
+| 8 | Tesla or Ford, higher profit in 2022 | Tesla: net income 12,587 USD against Ford's net loss of 1,981 USD | correct and grounded |
+| 8a | "what about by margin?" | Rewritten to a margin comparison: Tesla about 15.5 percent, Ford negative 1.3 percent | correct and grounded |
+| 9 | Tesla's profit in 2022 and 2023 | 12,587 and 14,974 USD | correct and grounded |
+| 10 | Best profitability in 2022 overall | Tesla. BMW Group's 2022 figures are not in the documents, only BMW Finance N.V.'s. Ford made a loss | correct and grounded |
+| 11 | Revenue summary, three years, all companies | Tesla 53,823 / 81,462 / 96,773 USD and Ford 136,341 / 158,057 / 176,191 USD for 2021 to 2023. BMW Group 111,239 EUR for 2021 only, with the entity caveat | correct and grounded |
+| 12 | BMW growth trends 2020 to 2023 | Group data covers 2020 to 2021: revenues 98,990 to 111,239 EUR, EBIT 4,830 to 13,400, net profit 3,857 to 12,463. 2022 and 2023 hold only BMW Finance N.V. | correct and grounded |
+
+The first run scored 9 of 14. The misses were retrieval, not reasoning: a segment revenue table without its heading was read as the company total, a key metrics table ranked below a balance sheet, and a question that named no company got no BMW chunks at all. The changes described under design decisions came out of those runs, and each is recorded with its measurement in the decision log kept alongside the code.
+
+## Failure analysis
+
+What holds up: no run produced a figure that is not in the documents, the BMW Finance N.V. entity distinction was stated every time a question touched 2022 or 2023, the five-year and comparative tables answer the questions about years without their own report, and both follow-ups were rewritten into the intended standalone question.
+
+Three blemishes remain in the final run and are left as they are:
+
+- In answer 10, one sentence calls BMW Group's 2021 profit before tax of 16,060 million EUR "net income" before labelling it EBT. The figure and its source are right, the wording is not.
+- Also in answer 10, a peripheral Ford figure, adjusted net operating profit after cash tax, is written in millions where the source table is in billions.
+- Answer 7 cites "page 42" next to the correct page 10. The number comes from a table-of-contents column that the two-column layout of the BMW Finance N.V. report merges into the row label.
+
+What is fragile: retrieval for terse numeric questions rests on row labels and table titles, so a report that labels a line unusually, or a table that loses its heading in a way the carry-over rule does not cover, can drop out of the top-k. The two-column pages of the BMW Finance N.V. reports produce row labels with stray prefixes, which is where the page 42 citation comes from. The verdicts are string checks, so a right figure in wrong wording passes them, as the two answer 10 blemishes show.
+
+With more time, the next steps would be column-aware extraction for two-column pages, a retrieval regression test that checks the top-k for each benchmark question without calling the answering model, a model-based grader that reads wording as well as figures, and a run of the benchmark with a larger answering model.
 
 ## Limitations
 
