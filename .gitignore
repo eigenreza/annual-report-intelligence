@@ -1,0 +1,28 @@
+# Secrets
+.env
+
+# Corpus: third-party documents, not distributed with the tool
+data/
+
+# Private working notes
+_admin/
+
+# Built index and embeddings
+index_store/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
