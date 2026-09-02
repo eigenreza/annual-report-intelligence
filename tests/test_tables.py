@@ -51,6 +51,22 @@ def test_change_column_currency_fragments_and_section_labels():
     assert "Net Income/(Loss) Margin (%): 2020 = (1.0)%; 2021 = 13.2%; H / (L) = 14.2ppts" in body
 
 
+def test_untitled_tables_inherit_the_most_recent_heading():
+    from src.ingest.parse import closing_labels
+
+    previous_page = ["Some closing sentence of the section.", "Automotive Segment"]
+    table = ["2019 2020 H / (L)", "Revenue ($M) $ 143,604 $ 115,894 $ (27,710)", "EBIT ($M) 4,888 1,706 (3,182)"]
+    carried = closing_labels(previous_page)
+    assert carried == ["Automotive Segment"]
+    assert find_table_blocks(table, carried)[0].title == ["Automotive Segment"]
+    assert find_table_blocks(table, None)[0].title == []
+    own_heading = ["An introductory sentence.", "Regional heading"] + table
+    assert find_table_blocks(own_heading, carried)[0].title == ["Regional heading"]
+    two_tables = ["Ford Credit Segment"] + table + ["The next table shows the same metrics for the following year."] + table
+    titles = [block.title for block in find_table_blocks(two_tables)]
+    assert titles == [["Ford Credit Segment"], ["Ford Credit Segment"]]
+
+
 def test_rows_without_a_fitting_header_keep_their_values_in_order():
     lines = ["Segment results", "Automotive 7,888 6,182", "Motorcycles 207 175"]
     blocks = find_table_blocks(lines)

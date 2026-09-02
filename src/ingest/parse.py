@@ -247,10 +247,19 @@ def _title_lines(lines: list[str], before: int) -> list[str]:
     return title
 
 
-def find_table_blocks(lines: list[str]) -> list[TableBlock]:
+def find_table_blocks(lines: list[str], carried_title: list[str] | None = None) -> list[TableBlock]:
+    """Detect tables in a page's lines.
+
+    A table without a heading of its own inherits the most recent one: the heading
+    of the previous table on the page, or `carried_title`, the heading lines that
+    closed the previous page. Reports put several tables under one section
+    heading and page breaks separate tables from their headings, and a segment
+    table without its heading reads like a company total.
+    """
     blocks: list[TableBlock] = []
     header: tuple[str, list[str]] | None = None
     header_at: int | None = None
+    last_title: list[str] = list(carried_title or [])
     i = 0
     while i < len(lines):
         tokens = _merge_tokens(lines[i].split())
@@ -294,8 +303,16 @@ def find_table_blocks(lines: list[str]) -> list[TableBlock]:
         else:
             unit, columns = "", []
             title = _title_lines(lines, start)
+        if not title:
+            title = list(last_title)
+        last_title = title
         blocks.append(TableBlock(title=title, unit=unit, columns=columns, rows=rows))
     return blocks
+
+
+def closing_labels(lines: list[str]) -> list[str]:
+    """Heading lines at the very end of a page, to carry over to the next page."""
+    return _title_lines(lines, len(lines))
 
 
 def serialize_table(block: TableBlock, page: int | None) -> tuple[str, str]:
@@ -329,6 +346,7 @@ def serialize_table(block: TableBlock, page: int | None) -> tuple[str, str]:
 
 def parse_pdf(path: Path) -> list[Unit]:
     units: list[Unit] = []
+    carried: list[str] = []
     with pdfplumber.open(str(path)) as pdf:
         for number, page in enumerate(pdf.pages, start=1):
             source, coverage, applied = dedup_page(page)
@@ -339,7 +357,9 @@ def parse_pdf(path: Path) -> list[Unit]:
             units.append(
                 Unit("\n".join(lines), "text", locator, page=number, dedup_applied=applied, dedup_coverage=coverage)
             )
-            for block in find_table_blocks(lines):
+            blocks = find_table_blocks(lines, carried)
+            carried = closing_labels(lines)
+            for block in blocks:
                 head, body = serialize_table(block, number)
                 units.append(
                     Unit(

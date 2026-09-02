@@ -49,6 +49,11 @@ def test_citations_joined_by_and_and_sources_lines_are_recognised():
     ]
 
 
+def test_page_word_repeated_inside_one_citation():
+    text = "From the income statement (Tesla_Annual_Report_2023.pdf, page 20 and page 21)."
+    assert extract_citations(text) == [("Tesla_Annual_Report_2023.pdf", {20, 21})]
+
+
 def test_prose_citation_form_is_recognised():
     text = "These figures come from the table on page 10 of BMW_Annual_Report_2021.pdf and page 4 in Tesla_Annual_Report_2023.pdf."
     assert extract_citations(text) == [("BMW_Annual_Report_2021.pdf", {10}), ("Tesla_Annual_Report_2023.pdf", {4})]

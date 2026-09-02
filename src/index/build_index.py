@@ -23,7 +23,7 @@ from src.llm import LLM
 INDEX_FILE = "index.faiss"
 CHUNKS_FILE = "chunks.json"
 MANIFEST_FILE = "manifest.json"
-PIPELINE_VERSION = 3
+PIPELINE_VERSION = 4
 
 Progress = Callable[[str], None]
 

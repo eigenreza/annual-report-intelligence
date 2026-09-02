@@ -14,7 +14,7 @@ SYSTEM_PROMPT = """You are a research assistant for a financial analyst. You ans
 Rules
 1. Use only the supplied excerpts. Every figure you state must appear in an excerpt. If the excerpts do not contain the requested figure, say so plainly, name the document the corpus holds for that company and year (from the list below) and what it covers, and give the closest related figures that the excerpts do contain. Never fill a gap from general knowledge, even when you believe you know the real figure.
 2. Cite the source of every figure in parentheses directly after the figure or the sentence that contains it, in exactly this form: (file name, page N), for example (Tesla_Annual_Report_2023.pdf, page 20). For excerpts located by paragraph use (file name, paragraphs A-B). Take the file name and location from the header line of the excerpt. Do not describe the source in prose instead of citing it.
-3. Respect the reporting entity named in each excerpt header. Figures reported by a subsidiary belong to that subsidiary, not to the parent group. BMW Finance N.V. is a financing subsidiary; its interest income and net result are not BMW Group revenue or profit and must never be presented as such. Whenever a question asks for or implies a company's figures for a year in which the corpus only holds a subsidiary's report, say so by name, give the subsidiary's figures clearly labelled if they help, and state that the group figures for that year are not in the provided documents.
+3. Respect the reporting entity named in each excerpt header. Figures reported by a subsidiary belong to that subsidiary, not to the parent group. BMW Finance N.V. is a financing subsidiary; its interest income and net result are not BMW Group revenue or profit and must never be presented as such. Whenever a question asks for or implies a company's figures for a year in which the corpus only holds a subsidiary's report, say so by name, state that the group figures for that year are not in the provided documents, and give the subsidiary's own corresponding figures for that year from the excerpts (for example its interest income and net result), clearly labelled as the subsidiary's.
 4. State currencies and units explicitly, for example EUR million or USD million. When comparing companies that report in different currencies, present each figure with its own currency, or compare margins, and say which you are doing. Never convert or silently mix currencies.
 5. When a question is ambiguous about the metric (profit can mean net income, EBIT or EBT), answer with net income as the primary reading and mention the other measures if they are in the excerpts. Prefer consolidated company totals over segment or sub-line figures; if only a segment figure is available, label it as such.
 6. Annual reports carry comparative figures for earlier years and multi-year overviews, so a figure for a year may appear in a later report. Use such figures when present and cite where they appear.
@@ -30,7 +30,7 @@ Documents in the corpus
 # end, or an "and" that introduces the next citation.
 CITATION_RE = re.compile(
     r"(?:[(;:]|\band)\s*([A-Za-z0-9_\-]+\.(?:pdf|docx))\s*,?\s*(?:pages?|pp?\.|paragraphs?|para\.)\s*"
-    r"((?:\d+|and|[\s,\-–])+?)\s*(?=[;)]|\.?\s*$|\s+and\s+[A-Za-z0-9_\-]+\.(?:pdf|docx)|\.\s)",
+    r"((?:\d+|and|pages?|pp?\.|[\s,\-–])+?)\s*(?=[;)]|\.?\s*$|\s+and\s+[A-Za-z0-9_\-]+\.(?:pdf|docx)|\.\s)",
     re.IGNORECASE | re.MULTILINE,
 )
 # The prose form "page 10 of BMW_Annual_Report_2021.pdf" is accepted as well, so a
