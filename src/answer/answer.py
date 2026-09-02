@@ -23,8 +23,11 @@ Rules
 Documents in the corpus
 {overview}"""
 
+# A citation opens with "(" or follows ";" inside a shared parenthesis, names a file,
+# then a page or paragraph locator such as "page 20", "pp. 10-11" or "pages 10 and 11".
 CITATION_RE = re.compile(
-    r"\(\s*([A-Za-z0-9_\-]+\.(?:pdf|docx))\s*,\s*(?:pages?|p\.|pp\.|paragraphs?|para\.)\s*([\d\s,\-–]+)\s*\)",
+    r"[(;]\s*([A-Za-z0-9_\-]+\.(?:pdf|docx))\s*,?\s*(?:pages?|pp?\.|paragraphs?|para\.)\s*"
+    r"((?:\d+|and|[\s,\-–])+?)\s*(?=[;)])",
     re.IGNORECASE,
 )
 
