@@ -156,7 +156,7 @@ The table below is from the run of 2 September 2026 with `gpt-4.1-mini`, k = 12 
 | 11 | Revenue summary, three years, all companies | Tesla 53,823 / 81,462 / 96,773 USD and Ford 136,341 / 158,057 / 176,191 USD for 2021 to 2023. BMW Group 111,239 EUR for 2021 only, with the entity caveat | correct and grounded |
 | 12 | BMW growth trends 2020 to 2023 | Group data covers 2020 to 2021: revenues 98,990 to 111,239 EUR, EBIT 4,830 to 13,400, net profit 3,857 to 12,463. 2022 and 2023 hold only BMW Finance N.V. | correct and grounded |
 
-The first run scored 9 of 14. The misses were retrieval, not reasoning: a segment revenue table without its heading was read as the company total, a key metrics table ranked below a balance sheet, and a question that named no company got no BMW chunks at all. The changes described under design decisions came out of those runs, and each is recorded with its measurement in the decision log kept alongside the code.
+The first run scored 9 of 14. The misses were retrieval, not reasoning: a segment revenue table without its heading was read as the company total, a key metrics table ranked below a balance sheet, and a question that named no company got no BMW chunks at all. The changes described under design decisions came out of those runs, and each is recorded with its measurement in `docs/decisions.md`.
 
 ## Failure analysis
 
