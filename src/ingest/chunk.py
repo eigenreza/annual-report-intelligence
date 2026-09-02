@@ -4,6 +4,12 @@ Tables stay whole, or are split by row groups with the header repeated. Running
 text is cut into windows of a few hundred tokens at line boundaries, preferring
 sentence and heading ends, with a small overlap. Every chunk carries the registry
 metadata of its document and its location in that document.
+
+Each table row is also emitted as a small child chunk that points at its table.
+A table that mixes a dozen metrics embeds as a blur, so a question about one line
+of it ranks the whole table below smaller, more specific chunks. The row chunks
+are what retrieval matches against; the table they belong to is what the model
+gets to read.
 """
 
 from __future__ import annotations
@@ -39,6 +45,7 @@ class Chunk:
     page: int | None
     locator: str
     chunk_type: str
+    parent_id: str | None = None
 
     @property
     def header(self) -> str:
@@ -136,6 +143,13 @@ def _paragraph_chunks(units: list[Unit], target: int, limit: int) -> list[tuple[
     return chunks
 
 
+def table_rows(text: str, header: str) -> list[str]:
+    """Data rows of a serialised table: everything after the header except
+    section labels, which are written in square brackets."""
+    body = text[len(header) :] if header and text.startswith(header) else text
+    return [line for line in body.strip("\n").splitlines() if line and not line.startswith("[")]
+
+
 def chunk_document(
     info: DocumentInfo,
     units: list[Unit],
@@ -143,38 +157,40 @@ def chunk_document(
     limit: int = MAX_TOKENS,
     overlap: int = OVERLAP_LINES,
 ) -> list[Chunk]:
-    pieces: list[tuple[str, str, str, int | None]] = []  # text, locator, type, page
+    chunks: list[Chunk] = []
+
+    def add(text: str, locator: str, chunk_type: str, page: int | None, parent: Chunk | None = None, prefix: str = "") -> Chunk:
+        chunk = Chunk(
+            chunk_id=f"{info.name}#{len(chunks) + 1}",
+            text=text,
+            embed_text=f"{_embed_header(info, locator)}\n{prefix}{text}",
+            company=info.company,
+            year=info.year,
+            entity=info.entity,
+            currency=info.currency,
+            source_file=info.name,
+            page=page,
+            locator=locator,
+            chunk_type=chunk_type,
+            parent_id=parent.chunk_id if parent else None,
+        )
+        chunks.append(chunk)
+        return chunk
 
     paragraph_units = [u for u in units if u.paragraph is not None]
     if paragraph_units:
         for text, locator in _paragraph_chunks(paragraph_units, target, limit):
-            pieces.append((text, locator, "text", None))
+            add(text, locator, "text", None)
 
     for unit in units:
         if unit.paragraph is not None:
             continue
         if unit.kind == "table":
             for text in _table_chunks(unit, limit):
-                pieces.append((text, unit.locator, "table", unit.page))
+                table = add(text, unit.locator, "table", unit.page)
+                for row in table_rows(text, unit.table_header):
+                    add(row, unit.locator, "row", unit.page, parent=table, prefix=f"{unit.table_header}\n")
         else:
             for window in split_lines(unit.text.splitlines(), target, limit, overlap):
-                pieces.append(("\n".join(window), unit.locator, "text", unit.page))
-
-    chunks: list[Chunk] = []
-    for n, (text, locator, chunk_type, page) in enumerate(pieces, start=1):
-        chunks.append(
-            Chunk(
-                chunk_id=f"{info.name}#{n}",
-                text=text,
-                embed_text=f"{_embed_header(info, locator)}\n{text}",
-                company=info.company,
-                year=info.year,
-                entity=info.entity,
-                currency=info.currency,
-                source_file=info.name,
-                page=page,
-                locator=locator,
-                chunk_type=chunk_type,
-            )
-        )
+                add("\n".join(window), unit.locator, "text", unit.page)
     return chunks

@@ -49,7 +49,7 @@ def main() -> None:
     except Exception as exc:  # a missing key or an unreadable corpus should read as a plain message
         console.print(f"[red]Could not start:[/red] {exc}")
         sys.exit(1)
-    console.print(f"[dim]model: {chat_model()}   chunks indexed: {len(pipeline.retriever.chunks)}[/dim]\n")
+    console.print(f"[dim]model: {chat_model()}   chunks indexed: {len(pipeline.retriever.readable_chunks)}[/dim]\n")
 
     while True:
         try:

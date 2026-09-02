@@ -11,7 +11,7 @@ def test_text_and_table_chunks_carry_document_metadata():
         Unit(f"{header}\nRevenue: 2020 = 1; 2021 = 2", "table", "page 3", page=3, table_header=header),
     ]
     chunks = chunk_document(info, units)
-    assert {c.chunk_type for c in chunks} == {"text", "table"}
+    assert {c.chunk_type for c in chunks} == {"text", "table", "row"}
     for c in chunks:
         assert (c.company, c.year, c.entity, c.currency) == ("Ford", 2021, "Ford Motor Company", "USD")
         assert (c.source_file, c.page, c.locator) == ("Ford_Annual_Report_2021.pdf", 3, "page 3")
@@ -22,15 +22,32 @@ def test_text_and_table_chunks_carry_document_metadata():
     assert len(ids) == len(set(ids))
 
 
+def test_table_rows_become_children_that_point_at_their_table():
+    info = lookup("Ford_Annual_Report_2021.pdf")
+    header = "Table (page 39): COMPANY KEY METRICS\nColumns: 2020 | 2021"
+    text = f"{header}\n[GAAP Financial Measures]\nRevenue ($M): 2020 = 127,144; 2021 = 136,341\nNet Income ($M): 2020 = (1,279); 2021 = 17,937"
+    chunks = chunk_document(info, [Unit(text, "table", "page 39", page=39, table_header=header)])
+    tables = [c for c in chunks if c.chunk_type == "table"]
+    rows = [c for c in chunks if c.chunk_type == "row"]
+    assert len(tables) == 1 and tables[0].parent_id is None
+    assert [r.text for r in rows] == [
+        "Revenue ($M): 2020 = 127,144; 2021 = 136,341",
+        "Net Income ($M): 2020 = (1,279); 2021 = 17,937",
+    ]
+    for row in rows:
+        assert row.parent_id == tables[0].chunk_id
+        assert (row.page, row.locator, row.company) == (39, "page 39", "Ford")
+        assert row.embed_text == f"Ford Motor Company annual report 2021 (Ford, figures in USD), page 39\n{header}\n{row.text}"
+
+
 def test_long_table_is_split_by_rows_with_header_repeated():
     header = "Table (page 9): Long\nColumns: 2022 | 2023"
     rows = [f"Line item number {i}: 2022 = {i}; 2023 = {i + 1}" for i in range(400)]
     unit = Unit(header + "\n" + "\n".join(rows), "table", "page 9", page=9, table_header=header)
-    chunks = chunk_document(lookup("Tesla_Annual_Report_2023.pdf"), [unit])
+    chunks = [c for c in chunk_document(lookup("Tesla_Annual_Report_2023.pdf"), [unit]) if c.chunk_type == "table"]
     assert len(chunks) > 1
     for c in chunks:
         assert c.text.startswith(header)
-        assert c.chunk_type == "table"
         assert count_tokens(c.text) <= MAX_TOKENS
     joined = "\n".join(c.text for c in chunks)
     assert all(joined.count(row) == 1 for row in rows)

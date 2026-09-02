@@ -124,7 +124,7 @@ def main() -> None:
     header = [
         "# Benchmark results\n",
         f"Run on {dt.date.today().isoformat()} with model `{chat_model()}`, k = {DEFAULT_K}, "
-        f"{len(pipeline.retriever.chunks)} chunks indexed.\n",
+        f"{len(pipeline.retriever.readable_chunks)} chunks indexed.\n",
         "Verdicts are string checks against corpus-verified reference figures: "
         "correct and grounded, correct but weakly cited, wrong or missing figure, leakage, wrongly refused.\n",
         "| # | Question | Verdict |",

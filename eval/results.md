@@ -6,49 +6,52 @@ Verdicts are string checks against corpus-verified reference figures: correct an
 
 | # | Question | Verdict |
 |---|---|---|
-| Q1 | What was BMW's total revenue in 2023? | wrongly refused |
+| Q1 | What was BMW's total revenue in 2023? | correct and grounded |
 | Q2 | How much revenue did Tesla generate in 2023? | correct and grounded |
 | Q2 follow-up | and the year before? | correct and grounded |
-| Q3 | What was Ford's revenue for the year 2020? | wrong or missing figure |
-| Q4 | Can you provide the revenue figures for BMW in 2017? | correct but weakly cited |
+| Q3 | What was Ford's revenue for the year 2020? | wrongly refused |
+| Q4 | Can you provide the revenue figures for BMW in 2017? | correct and grounded |
 | Q5 | What key economic factors influenced Ford's performance in 2021? | correct and grounded |
 | Q6 | Which Tesla product is currently in the development stage? | correct and grounded |
 | Q7 | What were BMW's profit figures for 2020 and 2023? | correct and grounded |
 | Q8 | Between Tesla and Ford, which company achieved higher profits in 2022? | correct and grounded |
 | Q8 follow-up | what about by margin? | correct and grounded |
 | Q9 | What were Tesla's profit numbers for 2022 and 2023? | correct and grounded |
-| Q10 | Which company recorded better profitability in 2022 overall? | wrong or missing figure |
+| Q10 | Which company recorded better profitability in 2022 overall? | correct and grounded |
 | Q11 | Provide a summary of revenue figures for Tesla, BMW, and Ford over the past three years. | wrong or missing figure |
-| Q12 | What were the growth trends for BMW's financial performance from 2020 to 2023? | correct and grounded |
+| Q12 | What were the growth trends for BMW's financial performance from 2020 to 2023? | correct but weakly cited |
 
 ## Q1. What was BMW's total revenue in 2023?
 
 **Reference:** No BMW Group figure for 2023 exists in the corpus. The 2023 BMW file is the annual report of BMW Finance N.V., a financing subsidiary: interest income 1,965,292 thousand EUR (about 1,965 million), net loss 394,288 thousand EUR (BMW_Annual_Report_2023.pdf, pages 10 and 19). The answer must say group revenue for 2023 is not in the documents. A figure near 155 billion EUR is leakage.
 
-**Verdict:** wrongly refused
-  (missing: 1,965 / 1.97 / 1.965 / 1,965.3)
+**Verdict:** correct and grounded
 
 **Answer:**
 
-The provided excerpts are from the BMW Finance N.V. annual report for 2023, which is a financing subsidiary of the BMW Group. These excerpts do not contain the total revenue figure for the BMW Group in 2023. They mainly show financial details related to receivables, interest expenses, financial results, and net income for BMW Finance N.V., not the BMW Group's total revenue.
+The provided excerpts are from the BMW Finance N.V. annual report for 2023, which is a financing subsidiary of the BMW Group. These excerpts report interest income, interest expenses, and financial results specific to BMW Finance N.V., not the total revenue of the BMW Group.
 
-Therefore, the total revenue of BMW Group in 2023 is not available in the supplied excerpts.
+There is no figure for BMW Group's total revenue in 2023 in the provided excerpts. The closest related figures are interest income and expenses of BMW Finance N.V., for example:
+- Interest income: EUR 1,965,292 thousand in 2023 (BMW_Annual_Report_2023.pdf, page 19)
+- Interest expenses: EUR (1,939,115) thousand in 2023 (BMW_Annual_Report_2023.pdf, page 19)
 
-If it helps, the net income (loss) of BMW Finance N.V. for 2023 was EUR -394,288 thousand (BMW_Annual_Report_2023.pdf, page 10). But this is not the BMW Group revenue figure.
+However, these are not BMW Group's total revenue.
+
+Therefore, BMW Group's total revenue for 2023 is not available in the provided documents. The corpus holds BMW Finance N.V.'s 2023 annual report, which covers the financing subsidiary's financial income and expenses but does not include BMW Group's total revenue.
 
 **Cited sources:**
-- BMW_Annual_Report_2023.pdf, page 10 (BMW Finance N.V., table)
+- BMW_Annual_Report_2023.pdf, page 19 (BMW Finance N.V., table)
 
 <details><summary>Retrieved excerpts</summary>
 
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 23] score=0.746
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 23] score=0.731
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 23] score=0.731
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.728
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 21] score=0.726
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 21] score=0.722
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.722
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.721
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.766
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.765
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 19] score=0.743
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 21] score=0.743
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 23] score=0.741
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 21] score=0.739
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 21] score=0.734
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.733
 
 </details>
 
@@ -61,9 +64,10 @@ If it helps, the net income (loss) of BMW Finance N.V. for 2023 was EUR -394,288
 
 **Answer:**
 
-Tesla generated total revenues of $96,773 million (USD) in 2023 (Tesla_Annual_Report_2023.pdf, pages 20, 26, 63).
+Tesla generated total revenues of $96,773 million in 2023 (Tesla_Annual_Report_2023.pdf, pages 8, 20, 26, 63).
 
 **Cited sources:**
+- Tesla_Annual_Report_2023.pdf, page 8 (Tesla, Inc., table)
 - Tesla_Annual_Report_2023.pdf, page 63 (Tesla, Inc., table)
 - Tesla_Annual_Report_2023.pdf, page 26 (Tesla, Inc., table)
 - Tesla_Annual_Report_2023.pdf, page 20 (Tesla, Inc., table)
@@ -71,14 +75,14 @@ Tesla generated total revenues of $96,773 million (USD) in 2023 (Tesla_Annual_Re
 
 <details><summary>Retrieved excerpts</summary>
 
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.808
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 26] score=0.806
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.803
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.779
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 9] score=0.774
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 54] score=0.773
-- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 59] score=0.771
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 8] score=0.764
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 8] score=0.791
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.787
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 26] score=0.784
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.782
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.778
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 11] score=0.777
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.774
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 11] score=0.762
 
 </details>
 
@@ -95,25 +99,25 @@ Tesla generated total revenues of $96,773 million (USD) in 2023 (Tesla_Annual_Re
 
 **Answer:**
 
-Tesla generated total revenues of $81,462 million in 2022 (Tesla_Annual_Report_2022.pdf, pages 20, 25; Tesla_Annual_Report_2023.pdf, pages 20, 26).
+Tesla generated total revenues of $81,462 million in 2022 (Tesla_Annual_Report_2022.pdf, pages 8, 20, 25, 59).
 
 **Cited sources:**
+- Tesla_Annual_Report_2022.pdf, page 59 (Tesla, Inc., table)
+- Tesla_Annual_Report_2022.pdf, page 8 (Tesla, Inc., table)
 - Tesla_Annual_Report_2022.pdf, page 20 (Tesla, Inc., table)
 - Tesla_Annual_Report_2022.pdf, page 25 (Tesla, Inc., table)
-- Tesla_Annual_Report_2023.pdf, page 20 (Tesla, Inc., table)
-- Tesla_Annual_Report_2023.pdf, page 26 (Tesla, Inc., table)
 - Tesla_Annual_Report_2022.pdf, page 20 (Tesla, Inc., text)
 
 <details><summary>Retrieved excerpts</summary>
 
-- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 59] score=0.810
-- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.803
-- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 25] score=0.799
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.792
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 26] score=0.790
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.788
-- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 8] score=0.778
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 59] score=0.790
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 8] score=0.790
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 8] score=0.783
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.783
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 25] score=0.778
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.774
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.773
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.772
 
 </details>
 
@@ -122,26 +126,33 @@ Tesla generated total revenues of $81,462 million in 2022 (Tesla_Annual_Report_2
 
 **Reference:** 127,144 million USD, from the 2020 comparative column of the Company Key Metrics table (Ford_Annual_Report_2021.pdf, page 39). There is no Ford 2020 report.
 
-**Verdict:** wrong or missing figure
+**Verdict:** wrongly refused
   (missing: 127,144 / 127.1 billion / 127.14)
 
 **Answer:**
 
-Ford's revenue for the year 2020 was $115,894 million USD (Ford_Annual_Report_2021.pdf, page 53).
+The excerpts provided do not contain Ford's revenue figure for the year 2020. The documents in the corpus for Ford include the 2021, 2022, and 2023 annual reports, but none of the excerpts from these reports show the revenue for 2020.
+
+The closest related figures available in the excerpts are:
+- Net income/(loss) attributable to Ford in 2020: $(1,279) million (Ford_Annual_Report_2022.pdf, page 52)
+- Automotive EBIT in 2020: $1,706 million (Ford_Annual_Report_2022.pdf, page 52)
+- Company Adjusted EBIT in 2020: $2,536 million (Ford_Annual_Report_2022.pdf, page 52)
+
+For the exact revenue figure for 2020, the Ford Motor Company Annual Report 2020 would be needed, which is not in the provided corpus.
 
 **Cited sources:**
-- Ford_Annual_Report_2021.pdf, page 53 (Ford Motor Company, table)
+- Ford_Annual_Report_2022.pdf, page 52 (Ford Motor Company, text)
 
 <details><summary>Retrieved excerpts</summary>
 
-- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 51] score=0.735
-- [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 52] score=0.732
-- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 71] score=0.729
-- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 39] score=0.728
-- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 52] score=0.727
-- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 63] score=0.720
-- [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 66] score=0.718
-- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 53] score=0.717
+- [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 66] score=0.751
+- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 66] score=0.749
+- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 49] score=0.747
+- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 71] score=0.747
+- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 59] score=0.742
+- [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 52] score=0.737
+- [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 59] score=0.734
+- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 39] score=0.733
 
 </details>
 
@@ -150,38 +161,25 @@ Ford's revenue for the year 2020 was $115,894 million USD (Ford_Annual_Report_20
 
 **Reference:** Group revenues 98,282 million EUR, from the five-year overview in the BMW Group Report 2021 (BMW_Annual_Report_2021.pdf, page 10). Automotive segment 85,742. A refusal is a failure.
 
-**Verdict:** correct but weakly cited
+**Verdict:** correct and grounded
 
 **Answer:**
 
-The revenue figures for BMW Group in 2017 are as follows (all figures in EUR million):
+The revenue figure for BMW Group in 2017 was €98,282 million (BMW_Annual_Report_2021.pdf, page 10).
 
-- Group revenues: 98,282
-- Automotive segment: 85,742
-- Motorcycles: 2,272
-- Financial Services: 27,567
-- Other Entities: 7
-- Eliminations: -17,306 (to be deducted from total)
-
-These figures are from the table "BMW Group in Figures / FURTHER FINANCIAL PERFORMANCE FIGURES" on page 10 of BMW_Annual_Report_2021.pdf.
-
-**No explicit citations. Excerpts consulted:**
+**Cited sources:**
 - BMW_Annual_Report_2021.pdf, page 10 (BMW Group, table)
-- BMW_Annual_Report_2021.pdf, page 11 (BMW Group, table)
-- BMW_Annual_Report_2021.pdf, page 9 (BMW Group, table)
-- BMW_Annual_Report_2021.pdf, page 32 (BMW Group, table)
-- BMW_Annual_Report_2021.pdf, page 10 (BMW Group, text)
 
 <details><summary>Retrieved excerpts</summary>
 
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 10] score=0.756
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 11] score=0.751
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 10] score=0.743
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 11] score=0.728
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 9] score=0.728
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 32] score=0.724
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 10] score=0.721
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 11] score=0.718
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 21] score=0.779
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 10] score=0.773
+- [BMW_Annual_Report_2021.pdf | BMW Group | page 10] score=0.769
+- [BMW_Annual_Report_2021.pdf | BMW Group | page 10] score=0.757
+- [BMW_Annual_Report_2021.pdf | BMW Group | page 11] score=0.749
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 20] score=0.748
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.743
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 36] score=0.742
 
 </details>
 
@@ -196,40 +194,23 @@ These figures are from the table "BMW Group in Figures / FURTHER FINANCIAL PERFO
 
 Key economic factors that influenced Ford's performance in 2021 include:
 
-1. Semiconductor Shortage and Supplier Disruptions:
-- A significant global shortage of semiconductors since early 2021 disrupted production, as automotive OEMs faced supply constraints due to semiconductor makers prioritizing consumer electronics during the COVID-19 pandemic and insufficient wafer foundry capacity.
-- This shortage led to lower vehicle production and impacted wholesale volumes, especially in Europe where wholesales declined 13% due to semiconductor-related production constraints (Ford_Annual_Report_2021.pdf, pages 34, 42, 55).
+1. Semiconductor Shortage: A significant shortage of semiconductors disrupted production across the automotive industry, including Ford. This shortage was caused by increased demand for consumer electronics during the COVID-19 pandemic, insufficient investment in wafer foundries, and rapid recovery of vehicle demand, leading to strained semiconductor supplies (Ford_Annual_Report_2021.pdf, page 34).
 
-2. COVID-19 Pandemic Impact:
-- COVID-19 caused volatility in the global economy, changes in consumer behavior, and restrictions on business activities.
-- Ford had to idle manufacturing operations globally in early 2020 and then phased a restart in the second quarter of 2020.
-- The pandemic also caused volatility in demand and supply chain disruptions (Ford_Annual_Report_2021.pdf, page 34).
+2. COVID-19 Impact: The pandemic caused volatility in the global economy, changes in consumer behavior, and restrictions on activities. Ford had to idle manufacturing operations in many regions in early 2020 and then phased restarts. Remote work arrangements were implemented for non-production functions (Ford_Annual_Report_2021.pdf, page 34).
 
-3. Pricing and Revenue Effects:
-- Despite lower volumes due to supply constraints, Ford experienced higher net pricing and favorable mix, which helped increase revenue in Europe by 8% and in International Markets Group by 19% in 2021.
-- Pricing remained elevated due to strong demand, supply shortages, and inflationary costs (Ford_Annual_Report_2021.pdf, pages 42, 44, 34).
+3. Other Economic Factors: Interest rates remained lower than expected, inflation accelerated, and government deficits and debt were high in many major markets. These factors could lead to higher cost of capital and potentially impede real GDP growth and vehicle sales over the planning period (Ford_Annual_Report_2021.pdf, page 35).
 
-4. Currency and Exchange Rate Effects:
-- Stronger currencies contributed positively to revenue and EBIT improvements in Europe and International Markets Group (Ford_Annual_Report_2021.pdf, pages 42, 44).
+4. Regional Market Effects:
+   - Europe: 2021 wholesales declined 13% due to semiconductor-related production constraints, but revenue improved 8% due to favorable mix, stronger currencies, and higher net pricing. EBIT loss improved by $697 million driven by higher net pricing, lower material and warranty expenses, and lower structural costs, partially offset by lower volume and increased commodity prices (Ford_Annual_Report_2021.pdf, pages 42 and 55).
+   - International Markets Group: Wholesales increased 11% reflecting recovery from COVID-related production suspension and higher industry volumes, partially offset by semiconductor supply constraints. Revenue increased 19% driven by higher volume and mix, higher net pricing, and stronger currencies. EBIT improved by $786 million due to stronger currencies, higher net pricing and volume, and lower warranty expense (Ford_Annual_Report_2021.pdf, page 44).
 
-5. Other Economic Factors:
-- Interest rates remained lower than expected, but inflation accelerated and government deficits and debt remained high in many major markets.
-- These factors could affect the cost of capital and vehicle sales growth over the planning period (Ford_Annual_Report_2021.pdf, page 35).
+5. Ford Credit: Earnings before tax increased by $2,109 million primarily due to favorable operating lease residual performance, non-recurrence of increased credit loss reserve from 2020, and reductions in credit loss reserve in 2021, partially offset by lower volume from semiconductor shortage and lower financing margin (Ford_Annual_Report_2021.pdf, page 47).
 
-Summary table of key impacts in 2021:
-
-| Factor                      | Impact on Ford in 2021                                  |
-|-----------------------------|--------------------------------------------------------|
-| Semiconductor shortage      | Production constraints, lower wholesale volumes        |
-| COVID-19 pandemic           | Manufacturing idling, demand volatility                 |
-| Pricing and mix             | Higher net pricing and favorable mix increased revenue  |
-| Currency exchange rates     | Stronger currencies boosted revenue and EBIT            |
-| Inflation and interest rates| Inflation accelerated; interest rates low but risks remain|
-
-(Ford_Annual_Report_2021.pdf, pages 34, 35, 42, 44, 55)
+In summary, the key economic factors were the semiconductor shortage, COVID-19 impacts, inflation and interest rate environment, and regional market dynamics including currency effects and pricing (Ford_Annual_Report_2021.pdf, pages 34, 35, 42, 44, 47, 55).
 
 **Cited sources:**
 - Ford_Annual_Report_2021.pdf, page 34 (Ford Motor Company, text)
+- Ford_Annual_Report_2021.pdf, page 47 (Ford Motor Company, text)
 - Ford_Annual_Report_2021.pdf, page 35 (Ford Motor Company, text)
 - Ford_Annual_Report_2021.pdf, page 42 (Ford Motor Company, text)
 - Ford_Annual_Report_2021.pdf, page 44 (Ford Motor Company, text)
@@ -258,11 +239,11 @@ Summary table of key impacts in 2021:
 
 The Tesla products currently in the development stage are:
 
-- Next Generation Platform (production status: In development)
-- Tesla Roadster (production status: In development)
-- Robotaxi & Others (production status: In development)
+- Next Generation Platform (vehicle) (Tesla_Annual_Report_2023.pdf, page 4)
+- Tesla Roadster (vehicle) (Tesla_Annual_Report_2023.pdf, page 4; Tesla_Annual_Report_2022.pdf, page 3)
+- Robotaxi & Others (vehicle-related) (Tesla_Annual_Report_2022.pdf, page 3)
 
-This is confirmed in the 2023 Annual Report which lists these models as in development (Tesla_Annual_Report_2023.pdf, page 4; Tesla_Annual_Report_2022.pdf, page 3).
+These are explicitly listed as "In development" in the 2023 and 2022 annual reports (Tesla_Annual_Report_2023.pdf, page 4; Tesla_Annual_Report_2022.pdf, page 3).
 
 **Cited sources:**
 - Tesla_Annual_Report_2023.pdf, page 4 (Tesla, Inc., text)
@@ -276,8 +257,8 @@ This is confirmed in the 2023 Annual Report which lists these models as in devel
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 4] score=0.541
 - [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 5] score=0.528
 - [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 12] score=0.524
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 11] score=0.520
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 3] score=0.514
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 4] score=0.512
 
 </details>
 
@@ -290,12 +271,12 @@ This is confirmed in the 2023 Annual Report which lists these models as in devel
 
 **Answer:**
 
-BMW's profit figures for 2020 and 2023 are as follows:
+BMW's profit figures for the years 2020 and 2023 are as follows:
 
 - For 2020, BMW Group's net profit (group net profit/loss) was €3,857 million (BMW_Annual_Report_2021.pdf, page 10).
-- For 2023, the provided figures are for BMW Finance N.V., a financing subsidiary of BMW Group, not the BMW Group itself. BMW Finance N.V. reported a net loss of €394,288 thousand (i.e., €394.3 million) in 2023 (BMW_Annual_Report_2023.pdf, page 10).
+- For 2023, the available profit figures are for BMW Finance N.V., a financing subsidiary of BMW Group, which reported a net loss of €394,288 thousand (or €394.288 million) (BMW_Annual_Report_2023.pdf, page 10).
 
-The BMW Group's profit figure for 2023 is not available in the provided excerpts. The 2023 figures given are only for BMW Finance N.V., which is a subsidiary and its profit/loss figures are not representative of the BMW Group's overall profit.
+The BMW Group consolidated profit figure for 2023 is not available in the provided documents; only the subsidiary BMW Finance N.V.'s figures for 2023 are present.
 
 **Cited sources:**
 - BMW_Annual_Report_2021.pdf, page 10 (BMW Group, table)
@@ -323,11 +304,11 @@ The BMW Group's profit figure for 2023 is not available in the provided excerpts
 
 **Answer:**
 
-In 2022, Tesla achieved a net income of $12,587 million (or $12.556 billion attributable to common stockholders) (Tesla_Annual_Report_2022.pdf, page 20).
+In 2022, Tesla achieved a net income of $12,587 million (Tesla_Annual_Report_2022.pdf, page 20).
 
-Ford, in contrast, had a net loss of $1,981 million (or -$1.981 billion) in 2022 (Ford_Annual_Report_2023.pdf, page 54 and Ford_Annual_Report_2022.pdf, page 39).
+Ford Motor Company reported a net loss of $1,981 million in 2022 (Ford_Annual_Report_2022.pdf, page 54).
 
-Therefore, Tesla achieved higher profits than Ford in 2022.
+Therefore, Tesla had higher profits than Ford in 2022.
 
 **Cited sources:**
 - Tesla_Annual_Report_2022.pdf, page 20 (Tesla, Inc., table)
@@ -335,7 +316,7 @@ Therefore, Tesla achieved higher profits than Ford in 2022.
 <details><summary>Retrieved excerpts</summary>
 
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 59] score=0.703
-- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 44] score=0.696
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 44] score=0.698
 - [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 54] score=0.693
 - [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.693
 - [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 71] score=0.690
@@ -343,7 +324,7 @@ Therefore, Tesla achieved higher profits than Ford in 2022.
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.685
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.682
 - [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 70] score=0.676
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 9] score=0.676
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 9] score=0.675
 
 </details>
 
@@ -360,23 +341,13 @@ Therefore, Tesla achieved higher profits than Ford in 2022.
 
 **Answer:**
 
-To compare the profit margins of Tesla and Ford in 2022, we look at their net income margins for that year:
+To compare the profit margin of Tesla and Ford in 2022, we look at their net income margin figures:
 
 - Ford's net income margin in 2022 was negative 1.3% (Ford_Annual_Report_2023.pdf, page 54; Ford_Annual_Report_2022.pdf, page 39).
-- Tesla's net income in 2022 was $12,587 million, with revenues from the automotive segment of $77,553 million and energy segment revenues of $3,909 million, totaling $81,462 million. The net income margin can be approximated as net income divided by total revenues: 12,587 / 81,462 ≈ 15.45% (Tesla_Annual_Report_2022.pdf, page 59; Tesla_Annual_Report_2022.pdf, page 20).
+- Tesla's net income in 2022 was $12,587 million and revenues were $81,462 million (sum of Automotive $77,553 million and Energy $3,909 million) (Tesla_Annual_Report_2022.pdf, page 59; Tesla_Annual_Report_2022.pdf, page 20).
+  Tesla's net income margin = (12,587 / 81,462) * 100% ≈ 15.45%.
 
-Therefore, Tesla had a significantly higher profit margin in 2022 (about 15.45%) compared to Ford's negative 1.3% margin.
-
-Summary:
-
-| Company | Year | Net Income Margin |
-|---------|------|-------------------|
-| Tesla   | 2022 | ~15.45%           |
-| Ford    | 2022 | -1.3%             |
-
-Sources: 
-- Ford net income margin: Ford_Annual_Report_2023.pdf, page 54; Ford_Annual_Report_2022.pdf, page 39
-- Tesla net income and revenues: Tesla_Annual_Report_2022.pdf, pages 59 and 20
+Therefore, Tesla had a higher profit margin in 2022 (about 15.45%) compared to Ford's negative 1.3% margin.
 
 **Cited sources:**
 - Ford_Annual_Report_2023.pdf, page 54 (Ford Motor Company, text)
@@ -386,13 +357,13 @@ Sources:
 
 <details><summary>Retrieved excerpts</summary>
 
-- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 44] score=0.691
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 9] score=0.689
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 44] score=0.692
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 9] score=0.688
 - [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 54] score=0.687
 - [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 71] score=0.684
 - [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 39] score=0.683
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 59] score=0.682
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.674
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.675
 - [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 56] score=0.672
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.657
 - [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.651
@@ -408,17 +379,15 @@ Sources:
 
 **Answer:**
 
-Tesla's profit numbers (net income) were:
+Tesla's net income (profit) numbers were:
 
 - For 2022: $12,587 million USD
 - For 2023: $14,974 million USD
 
-These figures are from Tesla's consolidated statements of income (Tesla_Annual_Report_2023.pdf, pages 20 and 21; Tesla_Annual_Report_2022.pdf, page 20).
+These figures are from Tesla's consolidated income statement (Tesla_Annual_Report_2023.pdf, page 20 and page 21; Tesla_Annual_Report_2022.pdf, page 20).
 
 **Cited sources:**
-- Tesla_Annual_Report_2023.pdf, page 20 (Tesla, Inc., table)
 - Tesla_Annual_Report_2022.pdf, page 20 (Tesla, Inc., table)
-- Tesla_Annual_Report_2023.pdf, page 21 (Tesla, Inc., table)
 
 <details><summary>Retrieved excerpts</summary>
 
@@ -427,7 +396,7 @@ These figures are from Tesla's consolidated statements of income (Tesla_Annual_R
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 59] score=0.746
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.739
 - [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 21] score=0.736
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 9] score=0.735
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 9] score=0.734
 - [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 55] score=0.731
 - [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 55] score=0.729
 
@@ -438,54 +407,57 @@ These figures are from Tesla's consolidated statements of income (Tesla_Annual_R
 
 **Reference:** Tesla, by absolute profit and by margin, among the companies whose group figures are in the corpus. BMW Group 2022 figures are not in the documents (the 2022 BMW file is BMW Finance N.V.), which the answer must say. A BMW figure near 18.6 billion EUR is leakage.
 
-**Verdict:** wrong or missing figure
-  (missing: (?i)BMW Finance)
+**Verdict:** correct and grounded
 
 **Answer:**
 
-The profitability comparison for 2022 between Ford Motor Company and Tesla, Inc. based on the provided excerpts is as follows:
+In 2022, the profitability comparison between Ford Motor Company and Tesla, Inc. is as follows:
 
-Ford Motor Company 2022:
-- Net income/(loss): -$1,981 million (loss)
-- Net income/(loss) margin: -1.3%
-- Company adjusted EBIT: $10,415 million
-- Company adjusted EBIT margin: 6.6%
-- Revenue: $158,057 million
-- Diluted EPS: -$0.49
-- Adjusted EPS: $1.88
-(Ford_Annual_Report_2022.pdf, pages 39, 54; Ford_Annual_Report_2023.pdf, page 44)
+Ford Motor Company (2022):
+- Net income/(loss): -$1,981 million (a loss) (Ford_Annual_Report_2023.pdf, page 54)
+- Net income/(loss) margin: -1.3% (Ford_Annual_Report_2023.pdf, page 54)
+- Company adjusted EBIT margin: 6.6% (Ford_Annual_Report_2023.pdf, page 54)
 
-Tesla, Inc. 2022:
-- The excerpts do not provide Tesla's net income or net income margin for 2022.
-- The only related figure is net income attributable to noncontrolling interests and redeemable noncontrolling interests in subsidiaries: $31 million in 2022.
-(Tesla_Annual_Report_2022.pdf, page 12)
+Tesla, Inc. (2022):
+- Net income: $12,587 million (Tesla_Annual_Report_2022.pdf, page 20)
+- Revenues: $77,553 million (Tesla_Annual_Report_2022.pdf, page 59)
+- Gross profit (Automotive segment): $20,565 million (Tesla_Annual_Report_2022.pdf, page 59)
 
-Since Tesla's overall net income or profitability metrics for 2022 are not provided in the excerpts, a direct comparison of overall profitability in 2022 cannot be made.
+BMW Finance N.V. (2022) (Note: This is a financing subsidiary, not the BMW Group overall):
+- Net income: EUR 403.943 million (BMW_Annual_Report_2022.pdf, page 10)
+- Gross profit: EUR 550.6 million (BMW_Annual_Report_2022.pdf, page 4)
 
-Summary:
-- Ford had a net loss of $1,981 million and a negative net income margin of -1.3% in 2022.
-- Tesla's overall net income and margin for 2022 are not disclosed in the excerpts.
-- Ford's adjusted EBIT margin was 6.6% in 2022.
+Since BMW Finance N.V. is a financing subsidiary and its figures do not represent the BMW Group's overall profitability, we cannot use it to compare overall company profitability.
 
-Therefore, based on the available data, only Ford's 2022 profitability figures are known, showing a net loss and negative margin. Tesla's 2022 profitability is not reported in the excerpts provided. 
+Between Ford and Tesla in 2022, Tesla recorded a positive net income of $12,587 million and a positive net income margin (implied by positive net income and revenues), while Ford recorded a net loss of $1,981 million and a negative net income margin of -1.3%.
 
-(Ford_Annual_Report_2022.pdf, pages 39, 54; Tesla_Annual_Report_2022.pdf, page 12)
+Therefore, Tesla, Inc. recorded better overall profitability in 2022 compared to Ford Motor Company (Ford_Annual_Report_2023.pdf, pages 44 and 54; Tesla_Annual_Report_2022.pdf, pages 20 and 59).
 
 **Cited sources:**
 - Ford_Annual_Report_2023.pdf, page 44 (Ford Motor Company, text)
-- Tesla_Annual_Report_2022.pdf, page 12 (Tesla, Inc., text)
-- Ford_Annual_Report_2022.pdf, page 39 (Ford Motor Company, text)
+- Ford_Annual_Report_2023.pdf, page 54 (Ford Motor Company, text)
+- Tesla_Annual_Report_2022.pdf, page 59 (Tesla, Inc., table)
+- Tesla_Annual_Report_2022.pdf, page 20 (Tesla, Inc., table)
+- BMW_Annual_Report_2022.pdf, page 4 (BMW Finance N.V., text)
+- BMW_Annual_Report_2022.pdf, page 10 (BMW Finance N.V., table)
 
 <details><summary>Retrieved excerpts</summary>
 
-- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 44] score=0.561
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 44] score=0.562
 - [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 54] score=0.553
 - [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 12] score=0.551
-- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 54] score=0.551
 - [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 3] score=0.551
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 54] score=0.551
 - [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 39] score=0.550
 - [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 39] score=0.549
-- [Ford_Annual_Report_2022.pdf | Ford Motor Company | page 52] score=0.543
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 59] score=0.541
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.536
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 20] score=0.530
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 4] score=0.523
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 10] score=0.488
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 22] score=0.481
+- [BMW_Annual_Report_2021.pdf | BMW Group | page 45] score=0.480
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 21] score=0.478
 
 </details>
 
@@ -495,59 +467,46 @@ Therefore, based on the available data, only Ford's 2022 profitability figures a
 **Reference:** Tesla 2021 to 2023: 53,823 / 81,462 / 96,773 million USD (Tesla_Annual_Report_2023.pdf, page 20). Ford 2021 to 2023: 136,341 / 158,057 / 176,191 million USD (Ford 2022 and 2023 key metrics). BMW Group revenue is available through 2021 only: 104,210 / 98,990 / 111,239 million EUR for 2019 to 2021 (BMW_Annual_Report_2021.pdf, page 10); 2022 and 2023 files are BMW Finance N.V.
 
 **Verdict:** wrong or missing figure
-  (missing: 176,191; missing: 158,057; missing: 136,341; missing: (?i)BMW Finance)
+  (missing: 111,239)
 
 **Answer:**
 
-Here is a summary of revenue figures for Tesla, BMW, and Ford over the past three years based on the provided excerpts:
+Summary of revenue figures for Tesla, BMW, and Ford over the past three years:
 
-| Company | Year | Revenue (in million) | Currency |
-|---------|------|----------------------|----------|
-| Tesla   | 2023 | 96,773               | USD      |
-| Tesla   | 2022 | 81,462               | USD      |
-| Tesla   | 2021 | 53,823               | USD      |
-| BMW     | 2021 | 111,239              | EUR      |
-| BMW     | 2020 | 98,990               | EUR      |
-| BMW     | 2019 | 104,210              | EUR      |
-| Ford    | 2023 | Not explicitly stated| USD      |
-| Ford    | 2022 | Not explicitly stated| USD      |
-| Ford    | 2021 | Not explicitly stated| USD      |
+| Company | 2021 Revenue | 2022 Revenue | 2023 Revenue | Currency |
+|---------|--------------|--------------|--------------|----------|
+| Tesla   | $53,823 million | $81,462 million | $96,773 million | USD (Tesla_Annual_Report_2023.pdf, pages 8, 20, 26) |
+| Ford    | $136,341 million | $158,057 million | $176,191 million | USD (Ford_Annual_Report_2023.pdf, pages 44, 54) |
+| BMW     | Not available for BMW Group revenue in the provided documents. The corpus holds BMW Finance N.V. reports for 2022 and 2023, which are financing subsidiary reports and do not include BMW Group revenue. | - | - | EUR (BMW_Annual_Report_2022.pdf and BMW_Annual_Report_2023.pdf are for BMW Finance N.V., not BMW Group) |
 
-Details:
-- Tesla's total revenues were $96,773 million in 2023, $81,462 million in 2022, and $53,823 million in 2021 (Tesla_Annual_Report_2023.pdf, pages 8, 20, 26).
-- BMW Group's total revenues were €111,239 million in 2021, €98,990 million in 2020, and €104,210 million in 2019. The 2022 and 2023 BMW Group revenues are not provided in the excerpts (BMW_Annual_Report_2021.pdf, page 10).
-- Ford's annual revenue figures for 2021-2023 are not explicitly stated in the excerpts. The excerpts provide sales volumes and market shares but do not give total revenue figures (Ford_Annual_Report_2023.pdf, page 5; Ford_Annual_Report_2021.pdf, page 51).
+Note: The BMW Group consolidated revenue figures for 2021, 2022, and 2023 are not present in the provided excerpts. The available BMW Finance N.V. reports show interest income and financial results but not total group revenue. Tesla and Ford revenues are reported in USD, BMW Finance N.V. figures are in EUR but do not represent group revenue. 
 
-Summary:
-- Tesla shows strong revenue growth from 2021 to 2023 in USD.
-- BMW Group revenue is available up to 2021 in EUR, showing growth in 2021 compared to 2020.
-- Ford's revenue figures for these years are not included in the provided excerpts. Only sales volumes and market shares are given.
-
-If you need revenue figures for Ford, please provide additional documents or excerpts containing that data.
+Therefore, only Tesla and Ford revenue figures for 2021-2023 are summarized above.
 
 **Cited sources:**
+- Tesla_Annual_Report_2023.pdf, page 8 (Tesla, Inc., table)
 - Tesla_Annual_Report_2023.pdf, page 26 (Tesla, Inc., table)
 - Tesla_Annual_Report_2023.pdf, page 20 (Tesla, Inc., table)
-- Tesla_Annual_Report_2023.pdf, page 8 (Tesla, Inc., table)
-- Ford_Annual_Report_2023.pdf, page 5 (Ford Motor Company, table)
-- Ford_Annual_Report_2023.pdf, page 5 (Ford Motor Company, text)
-- Ford_Annual_Report_2021.pdf, page 51 (Ford Motor Company, table)
-- BMW_Annual_Report_2021.pdf, page 10 (BMW Group, table)
+- Ford_Annual_Report_2023.pdf, page 44 (Ford Motor Company, table)
+- Ford_Annual_Report_2023.pdf, page 54 (Ford Motor Company, table)
 
 <details><summary>Retrieved excerpts</summary>
 
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 26] score=0.701
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.695
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 8] score=0.691
-- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.689
-- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 5] score=0.643
-- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 5] score=0.643
-- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 5] score=0.641
-- [Ford_Annual_Report_2021.pdf | Ford Motor Company | page 51] score=0.631
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 10] score=0.595
-- [BMW_Annual_Report_2021.pdf | BMW Group | page 11] score=0.592
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.582
-- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 36] score=0.582
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 8] score=0.690
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 26] score=0.687
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 20] score=0.682
+- [Tesla_Annual_Report_2023.pdf | Tesla, Inc. | page 63] score=0.678
+- [Tesla_Annual_Report_2022.pdf | Tesla, Inc. | page 8] score=0.678
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 44] score=0.637
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 5] score=0.636
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 70] score=0.635
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 54] score=0.634
+- [Ford_Annual_Report_2023.pdf | Ford Motor Company | page 5] score=0.634
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 21] score=0.624
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.620
+- [BMW_Annual_Report_2022.pdf | BMW Finance N.V. | page 10] score=0.618
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 10] score=0.610
+- [BMW_Annual_Report_2023.pdf | BMW Finance N.V. | page 36] score=0.603
 
 </details>
 
@@ -556,41 +515,42 @@ If you need revenue figures for Ford, please provide additional documents or exc
 
 **Reference:** Group data covers 2020 to 2021: revenues 98,990 to 111,239 million EUR (up 12.4 percent), EBIT 4,830 to 13,400, net profit 3,857 to 12,463 (BMW_Annual_Report_2021.pdf, page 10). For 2022 and 2023 the corpus only holds BMW Finance N.V., so the group trend cannot be extended, and the answer must say so.
 
-**Verdict:** correct and grounded
+**Verdict:** correct but weakly cited
 
 **Answer:**
 
-The growth trends for BMW Group's financial performance from 2020 to 2021 (latest year available for the group) are as follows (all figures in EUR million unless otherwise stated):
+The growth trends for BMW Group's financial performance from 2020 to 2021 (the latest year available in the BMW Group reports) are as follows (all figures in EUR million unless otherwise stated):
 
-| Metric                                | 2020       | 2021       | Change %    |
-|-------------------------------------|------------|------------|-------------|
-| Group revenues                      | 98,990     | 111,239    | +12.4%      |
-| Automotive revenues                 | 80,853     | 95,476     | +18.1%      |
-| Motorcycles revenues               | 2,284      | 2,748      | +20.3%      |
-| Financial Services revenues        | 30,044     | 32,867     | +9.4%       |
-| Group net profit / loss            | 3,857      | 12,463     | +223%       |
-| Group profit / loss before tax (EBT) | 5,222      | 16,060     | +207%       |
-| Group profit / loss before financial result (EBIT) | 4,830      | 13,400     | +177%       |
-| Automotive EBIT                   | 2,162      | 9,870      | +357%       |
-| Deliveries (units)                | 2,325,179  | 2,521,514  | +8.4%       |
-| Share of electrified vehicles in deliveries (%) | 8.3        | 13.0       | +56.6%      |
+| Metric                          | 2020       | 2021       | Change %   |
+|--------------------------------|------------|------------|------------|
+| Group revenues                 | 98,990     | 111,239    | +12.4%     |
+| Automotive revenues            | 80,853     | 95,476     | +18.1%     |
+| Motorcycles revenues           | 2,284      | 2,748      | +20.3%     |
+| Financial Services revenues    | 30,044     | 32,867     | +9.4%      |
+| Group net profit / loss        | 3,857      | 12,463     | -          |
+| Group profit / loss before tax (EBT) | 5,222 | 16,060    | -          |
+| Group profit / loss before financial result (EBIT) | 4,830 | 13,400 | -          |
+| Automotive EBIT                | 2,162      | 9,870      | -          |
+| Free cash flow Automotive segment | 3,395   | 6,354      | +87.2%     |
+| Deliveries (units)             | 2,325,179  | 2,521,514  | +8.4%      |
 
-Additional notes:
-- The workforce slightly decreased from 120,726 in 2020 to 118,909 in 2021 (-1.5%).
-- CO2 emissions for EU new vehicle fleet decreased from 99.1 g/km in 2020 to 115.99 g/km in 2021 (a -14.1% change, though the 2021 figure seems higher than 2020, possibly a reporting nuance).
-- Data for 2022 and 2023 for BMW Group financial performance is not available in the provided excerpts; only BMW Finance N.V. subsidiary data is available for those years, which is not representative of the group’s overall financial performance.
+From 2017 to 2021, the BMW Group experienced a dip in revenues and profits in 2020, likely due to the pandemic, followed by a strong recovery in 2021 with significant growth in revenues, profits, and free cash flow. Deliveries also rebounded strongly in 2021 after a decline in 2020.
 
-For BMW Finance N.V. (a financing subsidiary), the financial result was negative in 2023 at EUR -504,768 thousand compared to a positive EUR 552,428 thousand in 2022, indicating a significant decline in that subsidiary's financial result (BMW_Annual_Report_2023.pdf, page 10).
+Regarding 2022 and 2023, the corpus only contains BMW Finance N.V. reports, which are for the financing subsidiary and do not include BMW Group consolidated financial performance. For BMW Finance N.V.:
 
-Summary:
-- BMW Group showed a strong recovery and growth in financial performance from 2020 to 2021, with revenues and profits more than doubling in some cases.
-- Deliveries and electrified vehicle share also increased notably.
-- No group-level financial data for 2022 and 2023 is available in the excerpts to assess trends beyond 2021.
+| Metric                        | 2022 (EUR thousand) | 2023 (EUR thousand) |
+|-------------------------------|---------------------|---------------------|
+| Financial result              | 552,428             | (504,768)           |
 
-Sources: BMW_Annual_Report_2021.pdf, pages 9-11; BMW_Annual_Report_2023.pdf, page 10.
+This financial result is for BMW Finance N.V. only and not representative of BMW Group's overall financial performance.
 
-**Cited sources:**
+In summary, BMW Group's financial performance showed a decline in 2020 followed by strong growth in 2021. Data for 2022 and 2023 for the Group is not available in the provided documents; only BMW Finance N.V. subsidiary data is available for those years (BMW_Annual_Report_2021.pdf for Group 2020-2021, BMW_Annual_Report_2022.pdf and BMW_Annual_Report_2023.pdf for BMW Finance N.V. 2022-2023).
+
+**No explicit citations. Excerpts consulted:**
+- BMW_Annual_Report_2021.pdf, page 11 (BMW Group, table)
+- BMW_Annual_Report_2021.pdf, page 10 (BMW Group, table)
 - BMW_Annual_Report_2023.pdf, page 10 (BMW Finance N.V., table)
+- BMW_Annual_Report_2021.pdf, page 9 (BMW Group, table)
 
 <details><summary>Retrieved excerpts</summary>
 

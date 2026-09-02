@@ -23,7 +23,7 @@ from src.llm import LLM
 INDEX_FILE = "index.faiss"
 CHUNKS_FILE = "chunks.json"
 MANIFEST_FILE = "manifest.json"
-PIPELINE_VERSION = 2
+PIPELINE_VERSION = 3
 
 Progress = Callable[[str], None]
 
@@ -77,9 +77,12 @@ def build_index(
         pages = {u.page for u in units if u.page is not None}
         deduped = {u.page for u in units if u.dedup_applied}
         tables = sum(1 for c in doc_chunks if c.chunk_type == "table")
+        rows = sum(1 for c in doc_chunks if c.chunk_type == "row")
         where = f"{len(pages)} pages" if pages else f"{len(units)} paragraphs"
         note = f", {len(deduped)} pages de-duplicated" if deduped else ""
-        progress(f"  {info.name}: {where}{note}, {len(doc_chunks)} chunks ({tables} tables)")
+        progress(
+            f"  {info.name}: {where}{note}, {len(doc_chunks) - rows} chunks ({tables} tables), {rows} table rows"
+        )
 
     progress(f"  embedding {len(chunks)} chunks with {EMBEDDING_MODEL} ...")
     vectors = llm.embed([c.embed_text for c in chunks])
