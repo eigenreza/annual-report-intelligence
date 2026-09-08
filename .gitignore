@@ -1,8 +1,11 @@
 # Secrets
 .env
 
-# Corpus: third-party documents, not distributed with the tool
-data/
+# Annual reports: third-party documents, not distributed with the tool.
+# data/SOURCES.md and the two news files are tracked.
+data/BMW/
+data/Ford/
+data/Tesla/
 
 # Private working notes
 _admin/
@@ -26,3 +29,6 @@ dist/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Office lock files
+~$*

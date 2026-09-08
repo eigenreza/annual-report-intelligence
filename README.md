@@ -15,23 +15,7 @@ pip install -r requirements.txt
 copy .env.example .env
 ```
 
-Add your OpenAI API key to `.env`. `OPENAI_MODEL` can stay at its default. Put the reports under `data/` in the layout the registry expects:
-
-```
-data/
-  BMW/BMW_Annual_Report_2021.pdf
-  BMW/BMW_Annual_Report_2022.pdf
-  BMW/BMW_Annual_Report_2023.pdf
-  Ford/Ford_Annual_Report_2021.pdf
-  Ford/Ford_Annual_Report_2022.pdf
-  Ford/Ford_Annual_Report_2023.pdf
-  Tesla/Tesla_Annual_Report_2022.pdf
-  Tesla/Tesla_Annual_Report_2023.pdf
-  news.pdf
-  news.docx
-```
-
-Then start the app:
+Add your OpenAI API key to `.env`. `OPENAI_MODEL` can stay at its default. Put the annual reports under `data/` as described in the Data section below, then start the app:
 
 ```
 python -m src.app
@@ -60,6 +44,14 @@ To run the tests:
 ```
 python -m pytest
 ```
+
+## Data
+
+The eight annual reports are not included in the repository, because they are third-party material. `data/SOURCES.md` gives the expected layout and the official download link for each report. Download each file and save it under `data/` with the exact name listed there, and the registry will pick it up.
+
+The two news files, `data/news.pdf` and `data/news.docx`, are included. They contain general news with no automotive content and serve as the distractor set, so the tool runs on them out of the box and the full corpus is available as soon as the reports are in place.
+
+The BMW files for 2022 and 2023 are the annual reports of BMW Finance N.V., a financing subsidiary, and the registry treats that entity as distinct from BMW Group. The design decisions below explain what that means for the answers.
 
 ## How it works
 

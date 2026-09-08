@@ -31,7 +31,8 @@ import pdfplumber
 
 YEAR_RE = re.compile(r"(19|20)\d{2}")
 NUMBER_RE = re.compile(r"\d[\d,]*(?:\.\d+)?")
-DASHES = {"-", "–", "—", "−"}
+# Hyphen, en dash, em dash and minus sign: all used as negative signs or empty-cell placeholders in the reports.
+DASHES = {"-", "\u2013", "\u2014", "\u2212"}
 PLACEHOLDERS = DASHES | {"n/a", "N/A", "n.m.", "n.m", "NM", "*"}
 VALUE_SUFFIXES = ("ppts", "pts", "pp", "%")
 
